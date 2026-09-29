@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bam Bam – Animation</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #090b18;
+    font-family: Arial, sans-serif;
+}
+
+#scene {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 50% 40%, #252a58 0%, #11152e 45%, #070812 100%);
+}
+
+/* Mond */
+#moon {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #fff7c7;
+    right: 12%;
+    top: 10%;
+    box-shadow: 0 0 50px #fff7c7;
+}
+
+/* Sterne */
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from { opacity: .2; transform: scale(.6); }
+    to { opacity: 1; transform: scale(1.5); }
+}
+
+/* Boden */
+#ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 22%;
+    background: linear-gradient(#11182a, #05060d);
+    border-top: 2px solid rgba(255,255,255,.08);
+}
+
+/* Figuren */
+.person {
+    position: absolute;
+    bottom: 21%;
+    width: 100px;
+    height: 240px;
+    transition: left 1.5s ease, transform .5s ease;
+}
+
+/* Kopf */
+.head {
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    left: 22px;
+    top: 0;
+    background: #f4c7a1;
+}
+
+/* Haare */
+.boy .head::before {
+    content: "";
+    position: absolute;
+    width: 58px;
+    height: 25px;
+    left: -2px;
+    top: -3px;
+    background: #182d75;
+    border-radius: 50% 50% 20% 20%;
+}
+
+.girl .head::before {
+    content: "";
+    position: absolute;
+    width: 65px;
+    height: 70px;
+    left: -5px;
+    top: -8px;
+    background: #ec4f9b;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* Körper */
+.body {
+    position: absolute;
+    width: 12px;
+    height: 90px;
+    left: 44px;
+    top: 53px;
+    border-radius: 10px;
+}
+
+.boy .body {
+    background: #208cff;
+    box-shadow: 0 0 20px rgba(32,140,255,.5);
+}
+
+.girl .body {
+    background: #ff4fa3;
+    box-shadow: 0 0 20px rgba(255,79,163,.5);
+}
+
+/* Arme */
+.arm {
+    position: absolute;
+    width: 10px;
+    height: 75px;
+    top: 58px;
+    border-radius: 10px;
+    transform-origin: top;
+}
+
+.boy .arm {
+    background: #208cff;
+}
+
+.girl .arm {
+    background: #ff4fa3;
+}
+
+.left-arm {
+    left: 38px;
+    transform: rotate(25deg);
+}
+
+.right-arm {
+    left: 48px;
+    transform: rotate(-25deg);
+}
+
+/* Beine */
+.leg {
+    position: absolute;
+    width: 10px;
+    height: 85px;
+    top: 135px;
+    border-radius: 10px;
+}
+
+.boy .leg {
+    background: #208cff;
+}
+
+.girl .leg {
+    background: #ff4fa3;
+}
+
+.left-leg {
+    left: 38px;
+    transform: rotate(12deg);
+}
+
+.right-leg {
+    left: 50px;
+    transform: rotate(-12deg);
+}
+
+/* Schuhe */
+.shoe {
+    position: absolute;
+    width: 30px;
+    height: 10px;
+    border-radius: 10px;
+    background: #111;
+}
+
+.boy .shoe {
+    box-shadow: 0 0 5px #208cff;
+}
+
+.girl .shoe {
+    box-shadow: 0 0 5px #ff4fa3;
+}
+
+.boy .shoe1 { left: 25px; top: 215px; }
+.boy .shoe2 { left: 51px; top: 215px; }
+
+.girl .shoe1 { left: 25px; top: 215px; }
+.girl .shoe2 { left: 51px; top: 215px; }
+
+/* Augen */
+.eye {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #111;
+    border-radius: 50%;
+    top: 25px;
+}
+
+.eye1 { left: 35px; }
+.eye2 { left: 50px; }
+
+/* Name */
+.label {
+    position: absolute;
+    top: 235px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.boy .label { color: #208cff; }
+.girl .label { color: #ff4fa3; }
+
+/* Herzen */
+.heart {
+    position: absolute;
+    color: #ff4fa3;
+    font-size: 30px;
+    pointer-events: none;
+    animation: heartFloat 2s forwards;
+}
+
+@keyframes heartFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(.5);
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-180px) scale(1.5);
+    }
+}
+
+/* Text */
+#story {
+    position: absolute;
+    top: 7%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: clamp(20px, 4vw, 42px);
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255,255,255,.5);
+    transition: opacity .5s;
+    z-index: 10;
+}
+
+/* Beat-Effekt */
+#flash {
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.beat {
+    animation: beatFlash .18s;
+}
+
+@keyframes beatFlash {
+    0% { opacity: .35; }
+    100% { opacity: 0; }
+}
+
+/* Musik Button */
+#musicButton {
+    position: absolute;
+    z-index: 20;
+    left: 50%;
+    bottom: 5%;
+    transform: translateX(-50%);
+    border: none;
+    padding: 14px 25px;
+    border-radius: 30px;
+    background: rgba(255,255,255,.12);
+    color: white;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Tanz */
+.dance {
+    animation: dance .35s infinite alternate;
+}
+
+@keyframes dance {
+    from {
+        transform: translateY(0) rotate(-4deg);
+    }
+    to {
+        transform: translateY(-18px) rotate(4deg);
+    }
+}
+
+/* Laufen */
+.walk {
+    animation: walk .35s infinite alternate;
+}
+
+@keyframes walk {
+    from { transform: rotate(-5deg); }
+    to { transform: rotate(5deg); }
+}
+
+/* Regen */
+.rain {
+    position: absolute;
+    top: -30px;
+    width: 2px;
+    height: 30px;
+    background: rgba(150,200,255,.6);
+    animation: rainFall 1s linear infinite;
+}
+
+@keyframes rainFall {
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+/* Sonnenaufgang */
+.sunrise {
+    background:
+        radial-gradient(circle at 50% 75%, #ff9f5a, transparent 20%),
+        linear-gradient(#522c5e, #e47d69 50%, #15152a);
+}
+</style>
+</head>
+
+<body>
+
+<div id="scene">
+
+    <div id="moon"></div>
+
+    <div id="ground"></div>
+
+    <div id="story">BAM BAM</div>
+
+    <div id="boy" class="person boy" style="left: 12%;">
+        <div class="head">
+            <div class="eye eye1"></div>
+            <div class="eye eye2"></div>
+        </div>
+        <div class="body"></div>
+        <div class="arm left-arm"></div>
+        <div class="arm right-arm"></div>
+        <div class="leg left-leg"></div>
+        <div class="leg right-leg"></div>
+        <div class="shoe shoe1"></div>
+        <div class="shoe shoe2"></div>
+        <div class="label">JUNGE</div>
+    </div>
+
+    <div id="girl" class="person girl" style="left: 72%;">
+        <div class="head">
+            <div class="eye eye1"></div>
+            <div class="eye eye2"></div>
+        </div>
+        <div class="body"></div>
+        <div class="arm left-arm"></div>
+        <div class="arm right-arm"></div>
+        <div class="leg left-leg"></div>
+        <div class="leg right-leg"></div>
+        <div class="shoe shoe1"></div>
+        <div class="shoe shoe2"></div>
+        <div class="label">MÄDCHEN</div>
+    </div>
+
+    <div id="flash"></div>
+
+    <button id="musicButton">▶ Animation starten</button>
+</div>
+
+<script>
+
+/* -------------------------
+   STERNE
+------------------------- */
+
+const scene = document.getElementById("scene");
+
+for (let i = 0; i < 80; i++) {
+    const star = document.createElement("div");
+    star.className = "star";
+
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 65 + "%";
+    star.style.animationDelay = Math.random() * 2 + "s";
+
+    scene.appendChild(star);
+}
+
+
+/* -------------------------
+   REGEN
+------------------------- */
+
+function createRain() {
+    for (let i = 0; i < 100; i++) {
+        const drop = document.createElement("div");
+        drop.className = "rain";
+        drop.style.left = Math.random() * 100 + "%";
+        drop.style.animationDelay = Math.random() * 1.5 + "s";
+
+        scene.appendChild(drop);
+    }
+}
+
+function removeRain() {
+    document.querySelectorAll(".rain").forEach(x => x.remove());
+}
+
+
+/* -------------------------
+   ELEMENTE
+------------------------- */
+
+const boy = document.getElementById("boy");
+const girl = document.getElementById("girl");
+const story = document.getElementById("story");
+const flash = document.getElementById("flash");
+const button = document.getElementById("musicButton");
+
+
+/* -------------------------
+   HERZEN
+------------------------- */
+
+function heart() {
+
+    const h = document.createElement("div");
+
+    h.className = "heart";
+    h.innerHTML = "♥";
+
+    h.style.left = (50 + Math.random() * 15 - 7.5) + "%";
+    h.style.bottom = "40%";
+
+    scene.appendChild(h);
+
+    setTimeout(() => h.remove(), 2000);
+}
+
+
+/* -------------------------
+   BEAT
+------------------------- */
+
+function beat() {
+
+    flash.classList.remove("beat");
+
+    void flash.offsetWidth;
+
+    flash.classList.add("beat");
+}
+
+
+/* -------------------------
+   TEXT
+------------------------- */
+
+function text(t) {
+    story.style.opacity = 0;
+
+    setTimeout(() => {
+        story.innerHTML = t;
+        story.style.opacity = 1;
+    }, 300);
+}
+
+
+/* -------------------------
+   ANIMATION
+------------------------- */
+
+function reset() {
+
+    boy.style.left = "12%";
+    girl.style.left = "72%";
+
+    boy.classList.remove("dance", "walk");
+    girl.classList.remove("dance", "walk");
+
+    scene.classList.remove("sunrise");
+
+    removeRain();
+
+    text("BAM BAM");
+}
+
+
+/* Szene 1 */
+
+function scene1() {
+
+    reset();
+
+    text("Zwei Menschen...");
+
+    setTimeout(() => {
+        text("irgendwo in der Nacht");
+    }, 2500);
+
+}
+
+
+/* Szene 2 */
+
+function scene2() {
+
+    text("Dann sieht er sie...");
+
+    boy.classList.add("walk");
+
+    boy.style.left = "28%";
+}
+
+
+/* Szene 3 */
+
+function scene3() {
+
+    text("Und sie sieht ihn.");
+
+    girl.classList.add("walk");
+
+    girl.style.left = "58%";
+
+    for (let i = 0; i < 5; i++) {
+        setTimeout(heart, i * 300);
+    }
+}
+
+
+/* Szene 4 */
+
+function scene4() {
+
+    text("BAM BAM 💗");
+
+    boy.style.left = "40%";
+    girl.style.left = "50%";
+
+    boy.classList.add("dance");
+    girl.classList.add("dance");
+
+    for (let i = 0; i < 10; i++) {
+        setTimeout(heart, i * 250);
+    }
+
+}
+
+
+/* Szene 5 */
+
+function scene5() {
+
+    text("Sie tanzen zusammen.");
+
+    boy.classList.add("dance");
+    girl.classList.add("dance");
+
+    beat();
+
+}
+
+
+/* Szene 6 */
+
+function scene6() {
+
+    text("Doch plötzlich...");
+
+    boy.classList.remove("dance");
+    girl.classList.remove("dance");
+
+    createRain();
+
+}
+
+
+/* Szene 7 */
+
+function scene7() {
+
+    text("Sie gehen auseinander.");
+
+    removeRain();
+
+    boy.style.left = "8%";
+    girl.style.left = "80%";
+}
+
+
+/* Szene 8 */
+
+function scene8() {
+
+    text("Aber er kann sie nicht vergessen.");
+
+    boy.style.left = "30%";
+    girl.style.left = "65%";
+
+    for (let i = 0; i < 5; i++) {
+        setTimeout(heart, i * 300);
+    }
+}
+
+
+/* Szene 9 */
+
+function scene9() {
+
+    text("Und dann...");
+
+    setTimeout(() => {
+
+        text("sehen sie sich wieder.");
+
+        boy.style.left = "42%";
+        girl.style.left = "51%";
+
+    }, 1200);
+
+}
+
+
+/* Finale */
+
+function scene10() {
+
+    scene.classList.add("sunrise");
+
+    text("BAM BAM ❤️");
+
+    boy.classList.add("dance");
+    girl.classList.add("dance");
+
+    for (let i = 0; i < 20; i++) {
+        setTimeout(heart, i * 180);
+    }
+
+}
+
+
+/* -------------------------
+   ZEITPLAN
+------------------------- */
+
+/*
+   Die Zeiten kannst du an die Länge
+   deiner Version des Liedes anpassen.
+
+   Alle Zeiten sind Millisekunden.
+*/
+
+const timeline = [
+
+    [0, scene1],
+
+    [7000, scene2],
+
+    [14000, scene3],
+
+    [21000, scene4],
+
+    [30000, scene5],
+
+    [42000, scene6],
+
+    [50000, scene7],
+
+    [60000, scene8],
+
+    [70000, scene9],
+
+    [82000, scene10]
+
+];
+
+
+let timers = [];
+
+
+/* -------------------------
+   START
+------------------------- */
+
+button.addEventListener("click", () => {
+
+    button.style.display = "none";
+
+    reset();
+
+    timeline.forEach(([time, fn]) => {
+
+        const timer = setTimeout(fn, time);
+
+        timers.push(timer);
+
+    });
+
+});
+
+
+/* -------------------------
+   KLEINE BEAT-ANIMATION
+------------------------- */
+
+setInterval(() => {
+
+    if (button.style.display === "none") {
+        beat();
+    }
+
+}, 900);
+
+</script>
+
+</body>
+</html>
